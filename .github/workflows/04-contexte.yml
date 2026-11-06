@@ -1,0 +1,26 @@
+name: CI Contextes
+
+on: 
+  push:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  APP_NAME: fastapi-starter
+
+jobs:
+  context-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+      - name: Afficher les contextes demandés
+        run: |
+          echo "Nom de l'application : ${{ env.APP_NAME }}"
+          echo "Acteur : ${{ github.actor }}"
+          echo "Événement : ${{ github.event_name }}"
+          echo "Branche : ${{ github.ref_name }}"
+          echo "SHA du commit : ${{ github.sha }}"
+          echo "OS du runner : ${{ runner.os }}"
+      - name: Afficher le JSON complet
+        run: echo '${{ toJson(github) }}'
